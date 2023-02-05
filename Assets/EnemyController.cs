@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    public float moveSpeed = 5f;
+    public float moveSpeed = 1.5f;
 
     public Transform playerTargetPoint;
 
     public LayerMask Obstacle;
+    public LayerMask Dirt;
 
     public bool obstaclePresent = false;
 
@@ -17,17 +18,20 @@ public class EnemyController : MonoBehaviour
     public bool isChasing;
 
     public bool moveRight = true;
+
+    public ParticleSystem digEff;
+
  
     void Start()
     {
-
+        digEff.Pause();
     }
 
    void Update()
     {
         if (isAimless)
         {
-            if (Physics2D.OverlapCircle(transform.position, 0.1f, Obstacle))
+            if (Physics2D.OverlapCircle(transform.position, 0.1f, Obstacle) || Physics2D.OverlapCircle(transform.position, 0.1f, Dirt))
             {
                 moveRight = !moveRight;
             }
@@ -35,10 +39,13 @@ public class EnemyController : MonoBehaviour
             if (moveRight)
             {
                 transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x + 1, transform.position.y, transform.position.z), moveSpeed * Time.deltaTime);
+                GetComponent<SpriteRenderer>().flipX= false;
             }
             else
             {
                 transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x - 1, transform.position.y, transform.position.z), moveSpeed * Time.deltaTime);
+                GetComponent<SpriteRenderer>().flipX = true;
+
             }
            
         }
@@ -46,6 +53,17 @@ public class EnemyController : MonoBehaviour
         if (isChasing)
         {
             transform.position = Vector3.MoveTowards(transform.position, playerTargetPoint.position, moveSpeed * Time.deltaTime);
+
+            if (Physics2D.OverlapCircle(transform.position, 0.1f, Obstacle) || Physics2D.OverlapCircle(transform.position, 0.1f, Dirt))
+            {
+                moveSpeed = 1f;
+                digEff.Play();
+            }
+            else
+            {
+                digEff.Pause();
+                moveSpeed = 1.7f;
+            }
         }
     }
 
