@@ -1,6 +1,8 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+
 --- !u!1 &7605565345178492263
+
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,6 +10,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+
   - component: {fileID: 7605565345178492260}
   - component: {fileID: 7605565345178492259}
   - component: {fileID: 7605565345178492258}
@@ -117,6 +120,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+  
 --- !u!114 &7605565345178492261
 MonoBehaviour:
   m_ObjectHideFlags: 0
