@@ -35,7 +35,7 @@ public class MinigameManager : MonoBehaviour
     public float cameraWaitForPanTime = 1.0f;
     public float cameraPanTime = 2.0f;
 
-    private State _currentState = State.Panning;
+    private State _currentState = State.Idle;
     private float _timer = 0.0f;
 
     private GameObject _rootSpawner;

@@ -136,11 +136,11 @@ public class Termina : MonoBehaviour
         
         if (xDir != 0)
         {
-            direction = new Vector2(xDir, 0);
+            direction = new Vector2(xDir, 0).normalized;
         }
         else if (yDir != 0)
         {
-            direction = new Vector2(0, yDir);
+            direction = new Vector2(0, yDir).normalized;
         }
         
         if (direction != Vector2.zero && direction != _targetDirection)

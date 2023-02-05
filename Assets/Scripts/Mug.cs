@@ -27,11 +27,19 @@ public class Mug : MonoBehaviour
     public void Shake(float delta)
     {
         transform.position = _origin;
-        
-        var xDir = Input.GetAxis("Horizontal");
-        var yDir = Input.GetAxis("Vertical");
+
+        var xDir = (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) 
+            ? 1.0f
+            : (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) 
+                ? -1.0f 
+                : 0.0f;
+        var yDir  = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) 
+            ? 1.0f 
+            : (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) 
+                ? -1.0f 
+                : 0.0f;
         var dir = new Vector2(xDir, yDir);
-        var offset = new Vector3(xDir * shakeOffset, yDir * shakeOffset);
+        var offset = new Vector3(dir.x * shakeOffset, dir.y * shakeOffset);
 
         if (dir != _previousDir && offset != Vector3.zero && !IsDone && _shakeTimer <= 0)
         {
