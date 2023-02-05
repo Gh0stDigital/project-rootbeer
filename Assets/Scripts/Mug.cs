@@ -44,6 +44,8 @@ public class Mug : MonoBehaviour
         if (dir != _previousDir && offset != Vector3.zero && !IsDone && _shakeTimer <= 0)
         {
             _shakeTimer = shakeTime;
+                
+            transform.Find("RootBeerShake").GetComponent<AudioSource>().Play();
             
             _shakeCounter++;
 
@@ -52,6 +54,8 @@ public class Mug : MonoBehaviour
                 IsDone = true;
                 transform.position = _origin;
                 _shakeTimer = 0;
+                
+                transform.Find("RootBeerDone").GetComponent<AudioSource>().Play();
             }
         }
 

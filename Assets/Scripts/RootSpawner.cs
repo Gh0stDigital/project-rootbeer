@@ -62,6 +62,8 @@ public class RootSpawner : MonoBehaviour
                 -Random.Range(0, spawnSize.y),
                 0));
             _interpolations.Add(0.0f);
+            
+            transform.Find("RootEnter").GetComponent<AudioSource>().Play();
 
             if (Roots.Count == spawnCount)
             {

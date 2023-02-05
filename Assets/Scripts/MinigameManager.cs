@@ -16,12 +16,18 @@ public class MinigameManager : MonoBehaviour
         Go,
         WaitForPan,
         Panning,
-        Shake
+        Shake,
+        WaitForDone,
+        Done
     }
 
     public GameObject playerPrefab;
     public GameObject rootSpawnerPrefab;
     public GameObject mugSpawnerPrefab;
+    public GameObject wellDonePrefab;
+
+    public int rootSpawnCount = 10;
+    public int mugSpawnCount = 5;
     
     public new GameObject camera;
     public Vector3 cameraPositionPostPan;
@@ -34,6 +40,7 @@ public class MinigameManager : MonoBehaviour
     public float spawnedPlayerWaitTime = 3.0f;
     public float cameraWaitForPanTime = 1.0f;
     public float cameraPanTime = 2.0f;
+    public float waitForDoneTime = 10.0f;
 
     private State _currentState = State.Idle;
     private float _timer = 0.0f;
@@ -43,6 +50,9 @@ public class MinigameManager : MonoBehaviour
     private GameObject _mugSpawner;
 
     private Vector3 _cameraOrigin;
+
+
+    public bool IsDone => _currentState == State.Done;
 
     // Start is called before the first frame update
     void Start()
@@ -57,11 +67,17 @@ public class MinigameManager : MonoBehaviour
         
         if (_currentState == State.Idle)
         {
+            if (_timer == 0)
+            {
+                transform.Find("TimeForRootBeer").GetComponent<AudioSource>().Play();
+            }
+            
             _timer += delta;
 
             if (_timer >= idleWaitTime)
             {
                 _rootSpawner = Instantiate(rootSpawnerPrefab, rootSpawnOrigin, Quaternion.identity);
+                _rootSpawner.GetComponent<RootSpawner>().spawnCount = rootSpawnCount;
                 _rootSpawner.GetComponent<RootSpawner>().StartSpawning();
                 _currentState = State.SpawningRoots;
             }
@@ -84,6 +100,7 @@ public class MinigameManager : MonoBehaviour
             {
                 _player = Instantiate(playerPrefab, playerSpawnPosition, Quaternion.identity);
                 _player.GetComponent<Termina>().paused = true;
+                transform.Find("StartCountdown").GetComponent<AudioSource>().Play();
                 _currentState = State.SpawnedPlayer;
                 _timer = 0.0f;
             }
@@ -105,6 +122,8 @@ public class MinigameManager : MonoBehaviour
             if (_rootSpawner.GetComponent<RootSpawner>().Roots.All(root => root == null))
             {
                 _player.GetComponent<Termina>().paused = true;
+                
+                transform.Find("LetsGetReadyToShake").GetComponent<AudioSource>().Play();
 
                 _currentState = State.WaitForPan;
                 _timer = 0.0f;
@@ -137,7 +156,34 @@ public class MinigameManager : MonoBehaviour
             {
                 _currentState = State.Shake;
                 _mugSpawner = Instantiate(mugSpawnerPrefab, transform.position, Quaternion.identity);
+                _mugSpawner.GetComponent<MugSpawner>().spawnCount = mugSpawnCount;
             }
+        }
+
+        if (_currentState == State.Shake)
+        {
+            if (_mugSpawner.GetComponent<MugSpawner>().CurrentState == MugSpawner.State.Done)
+            {
+                transform.Find("Background Music").GetComponent<AudioSource>().Stop();
+                Instantiate(wellDonePrefab, transform.position, Quaternion.identity);
+                _currentState = State.WaitForDone;
+                _timer = 0.0f;
+            }
+        }
+
+        if (_currentState == State.WaitForDone)
+        {
+            _timer += delta;
+
+            if (_timer >= waitForDoneTime)
+            {
+                _currentState = State.Done;
+            }
+        }
+
+        if (_currentState == State.Done)
+        {
+            Debug.Log("Done!");
         }
     }
     

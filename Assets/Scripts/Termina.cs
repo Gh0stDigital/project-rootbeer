@@ -149,6 +149,8 @@ public class Termina : MonoBehaviour
             {
                 _turnTimer = turnTime;
                 _skidTimer = skidTime;
+                
+                transform.Find("Skid").GetComponent<AudioSource>().Play();
             }
 
             _targetDirection = direction;
