@@ -7,7 +7,7 @@ public class Root_Object : MonoBehaviour
     public int rootHealth = 5;
 
     [SerializeField]
-    private ParticleSystem _mineParticleSystem;
+    private ParticleSystem _rootParticleFX, _destroyParticleFX;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,22 +20,23 @@ public class Root_Object : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.transform.CompareTag("Player"))
-        {
-            rootHealth--;
 
-            if(rootHealth == 0)
-            {
-                MineRoot();
-            }
+    public void HitRoot()
+    {
+        rootHealth--;
+        Instantiate(_rootParticleFX, this.gameObject.transform.position, Quaternion.identity);
+
+        if (rootHealth == 0)
+        {
+            MineRoot();
         }
     }
 
     public void MineRoot()
     {
-        Instantiate(_mineParticleSystem, this.gameObject.transform.position, Quaternion.identity);
+        FindObjectOfType<RootRun_GameManager>().playersRoots++;
+        Instantiate(_destroyParticleFX, this.gameObject.transform.position, Quaternion.identity);
+        Destroy(this.gameObject);
     }
 
 
