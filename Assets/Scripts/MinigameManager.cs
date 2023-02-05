@@ -25,6 +25,7 @@ public class MinigameManager : MonoBehaviour
     public GameObject rootSpawnerPrefab;
     public GameObject mugSpawnerPrefab;
     public GameObject wellDonePrefab;
+    public GameObject startCountdownPrefab;
 
     public int rootSpawnCount = 10;
     public int mugSpawnCount = 5;
@@ -100,7 +101,7 @@ public class MinigameManager : MonoBehaviour
             {
                 _player = Instantiate(playerPrefab, playerSpawnPosition, Quaternion.identity);
                 _player.GetComponent<Termina>().paused = true;
-                transform.Find("StartCountdown").GetComponent<AudioSource>().Play();
+                Instantiate(startCountdownPrefab, transform.position, Quaternion.identity);
                 _currentState = State.SpawnedPlayer;
                 _timer = 0.0f;
             }

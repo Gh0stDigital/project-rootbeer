@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Mug : MonoBehaviour
 {
+    private const int AnimationFrameCount = 5;
+    
     public float shakeOffset = 8.0f / 48.0f;
     public int shakeCount = 10;
     public float shakeTime = 0.2f;
@@ -67,5 +69,17 @@ public class Mug : MonoBehaviour
         }
 
         _previousDir = dir;
+
+        UpdateSpriteFrame();
+    }
+
+    private void UpdateSpriteFrame()
+    {
+        var frame = (int)(((float)_shakeCounter / shakeCount) * (AnimationFrameCount - 1));
+
+        for (var i = 0; i < AnimationFrameCount; i++)
+        {
+            transform.Find($"Frame{i}").GetComponent<SpriteRenderer>().enabled = i == frame;
+        }
     }
 }

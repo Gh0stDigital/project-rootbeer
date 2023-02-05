@@ -46,10 +46,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mugPrefab: {fileID: 1186955465354879225, guid: 03b09605ab4aaab44a2ffc488aaa83ec, type: 3}
   spawnCount: 5
-  mugsPerRow: 4
+  mugsPerRow: 3
   spawnArea:
     serializedVersion: 2
-    x: -5
+    x: -4
     y: -28.5
     width: 12
     height: 15
