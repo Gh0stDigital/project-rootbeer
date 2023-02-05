@@ -19,7 +19,10 @@ public class SceneChange : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        SceneManager.LoadScene(sceneBuildIndex:0);
+        if (collision.gameObject.tag == "Player")
+        {
+            SceneManager.LoadScene(sceneBuildIndex: 1);
+        }
     }
 
 }
