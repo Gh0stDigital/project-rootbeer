@@ -1965,6 +1965,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 835409523}
     - target: {fileID: 5437717820878720688, guid: 5fe87eb31b1ed2c4bacf573041da851f, type: 3}
+      propertyPath: moveSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5437717820878720688, guid: 5fe87eb31b1ed2c4bacf573041da851f, type: 3}
       propertyPath: playerTargetPoint
       value: 
       objectReference: {fileID: 609031602}
@@ -6942,7 +6946,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootHealth: 5
-  _mineParticleSystem: {fileID: 7553725974648579644, guid: 27a1a1a28dcf9b44b84afa9eb00b540e, type: 3}
+  _rootParticleFX: {fileID: 0}
+  _destroyParticleFX: {fileID: 0}
 --- !u!61 &1737796060
 BoxCollider2D:
   m_ObjectHideFlags: 0
