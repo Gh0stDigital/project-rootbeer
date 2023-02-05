@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public SpriteRenderer helment;
+
     public float moveSpeed = 5f;
     public float digSpeed = 3f;
     public Transform movePoint;
@@ -129,10 +131,12 @@ public class PlayerController : MonoBehaviour
                 if (Input.GetAxisRaw("Horizontal") < 0)
                 {
                     GetComponent<SpriteRenderer>().flipX = true;
+                    helment.flipX = true;
                 }
                 else
                 {
                     GetComponent<SpriteRenderer>().flipX = false;
+                    helment.flipX = false;
                 }
                 
             }
@@ -152,26 +156,6 @@ public class PlayerController : MonoBehaviour
                 movePoint.position = previousPos;
             }
         }
-
-        /*if (Vector3.Distance(transform.position, movePoint.position) > .05f)
-        {
-            if (Physics2D.OverlapCircle(movePoint.position, .2f, Dirt) && !obsticlePresent) //+ new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f)
-            {
-                
-                obsticlePresent = true;
-            }
-        }
-        else
-        {
-            obsticlePresent = false;
-        }*/
-
-        /*if (Input.GetAxisRaw("Horizontal") == 0f && Input.GetAxisRaw("Vertical") == 0f)
-        {
-
-            movePoint.position = transform.position;
-            obsticlePresent = false;
-        }*/
     }
 
     public void StopAllSFX()
@@ -184,7 +168,10 @@ public class PlayerController : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        if(collision.transform.CompareTag("Root"))
+        {
+            collision.gameObject.GetComponent<Root_Object>().HitRoot();
+        }
     }
 
     public void OnCollisionExit2D(Collision2D collision)
