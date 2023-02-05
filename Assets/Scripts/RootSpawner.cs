@@ -55,7 +55,8 @@ public class RootSpawner : MonoBehaviour
         {
             _spawnTimer = spawnInterval;
             var r = Instantiate(root, transform.position, Quaternion.identity);
-
+            r.transform.eulerAngles = new Vector3(0, 0, Random.Range(-180.0f, 180.0f));
+            
             Roots.Add(r);
             _targetOffsets.Add(new Vector3(
                 Random.Range(0, spawnSize.x),
