@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.PackageManager.UI;
-using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MinigameManager : MonoBehaviour
 {
@@ -184,6 +183,7 @@ public class MinigameManager : MonoBehaviour
 
         if (_currentState == State.Done)
         {
+            SceneManager.LoadScene(sceneBuildIndex: 2);
             Debug.Log("Done!");
         }
     }
